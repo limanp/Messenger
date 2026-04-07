@@ -11,8 +11,9 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
-        <ListBox Name="listDialog">
+        
+        <!-- List of dialoge -->
+        <ListBox Name="listDialog" Grid.Column="0">
             <ListBoxItem>Item1</ListBoxItem>
             <ListBoxItem>Item2</ListBoxItem>
             <ListBoxItem>Item3</ListBoxItem>
@@ -20,5 +21,21 @@
             <ListBoxItem>Item5</ListBoxItem>
             <ListBoxItem>Item6</ListBoxItem>
         </ListBox>
+        
+        <!-- List messages history -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            
+             
+            <ScrollViewer Grid.Column="1" Grid.Row="0" HorizontalScrollBarVisibility="Auto">
+                <ItemsControl Margin="10"></ItemsControl>
+            </ScrollViewer>
+      
+            <TextBox Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" Background="Aqua"/>
+        </Grid>
+  
     </Grid>
 </Window>
