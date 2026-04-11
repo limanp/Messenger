@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.ObjectModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,16 @@ namespace Messenger
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+    }
+    internal class MessageTextData : ObservableCollection<string>
+    {
+        internal MessageTextData()
+        {
+            Add("Message 1");
+            Add("Message 2");
+            Add("Message 3");
         }
     }
 }
