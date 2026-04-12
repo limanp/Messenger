@@ -15,21 +15,41 @@ namespace Messenger
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+
+            List<MessageData> items = new List<MessageData>();
+            items.Add(new MessageData() { ContactName = "Pavlo", Text = "Hello!" });
+            items.Add(new MessageData() { ContactName = "James", Text = "Hello, How are you?", Sender = MessageSender.Contact});
+            items.Add(new MessageData() { ContactName = "Pavlo", Text = "Nice, and you?" });
+          
+            icMessageList.ItemsSource = items;
+        }
+        internal void InitializeMesseging()
+        {
+            
         }
 
     }
-    internal class MessageTextData : ObservableCollection<string>
+   
+    internal enum MessageSender
     {
-        internal MessageTextData()
-        {
-            Add("Message 1");
-            Add("Message 2");
-            Add("Message 3");
-        }
+        Me, 
+        Contact
     }
+    internal class MessageData
+    {
+
+        public string ContactName { get; set; } = string.Empty;
+        public string Text { get; set; } = string.Empty;
+        public string AvatarPath { get; set; } = string.Empty;
+        public MessageSender Sender { get; set; }
+        public bool IsFromMe => Sender == MessageSender.Me; 
+        
+    }
+
 }

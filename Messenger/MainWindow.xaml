@@ -7,11 +7,7 @@
         xmlns:src="clr-namespace:Messenger"
         mc:Ignorable="d"
         Title="Messenger" Height="450" Width="800">
-    
-    <Window.Resources>
-        <src:MessageTextData x:Key="dataList"/>
-    </Window.Resources>
-    
+     
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -38,7 +34,24 @@
             
             
             <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto">
-                <ItemsControl Margin="10" ItemsSource="{Binding Source={StaticResource dataList}}">
+                <ItemsControl Margin="10" Name="icMessageList">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                        <Grid Margin="0,0,0,50">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/> <!-- Message Avatar -->
+                                <ColumnDefinition Width="Auto"/> <!-- Message Text -->
+                            </Grid.ColumnDefinitions>
+
+                            <Border BorderBrush="Black" BorderThickness="2"/>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding ContactName}"/>
+                                <TextBlock Margin="20,0,0,0" Text="{Binding Text}"/>
+                            </StackPanel>
+                            
+                        </Grid>
+                    </DataTemplate>
+                    </ItemsControl.ItemTemplate>
                     
                 </ItemsControl>
             </ScrollViewer>
