@@ -19,10 +19,11 @@ namespace Messenger
     
     public partial class MainWindow : Window
     {
-        ChatViewModel chatViewModel = new ChatViewModel();
+        Chat chat = new Chat();
         public MainWindow()
         {
             InitializeComponent();
+            messageList.ItemsSource = chat.Messages; 
         }
      
 
@@ -32,7 +33,7 @@ namespace Messenger
             if (!string.IsNullOrWhiteSpace(text))
             {
                 MessageData message = new MessageData() { ContactName = "Pavlo", Text = text };
-                chatViewModel.Messages.Add(message); 
+                chat.Messages.Add(message); 
              
                 MessageTextBox.Clear();
             }
@@ -40,7 +41,7 @@ namespace Messenger
         }
     }
 
-    public class ChatViewModel : INotifyPropertyChanged
+    public class Chat : INotifyPropertyChanged
     {
         public ObservableCollection<MessageData> Messages { get; set; } = new ObservableCollection<MessageData>();
 
@@ -55,19 +56,14 @@ namespace Messenger
         protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); 
 
-        //internal void SelectContact(Contact contact)
-        //{
-        //    CurrentChat = Chat(contact);
-        //}
-        
     }
 
-    internal enum MessageSender
+    public enum MessageSender // Визначає, хто є відправником повідомлення
     {
         Me, 
         Contact
     }
-    internal class MessageData
+    public class MessageData // Клас для зберігання даних про повідомлення 
     {
 
         public string ContactName { get; set; } = string.Empty;
@@ -76,10 +72,5 @@ namespace Messenger
         public MessageSender Sender { get; set; }
         public bool IsFromMe => Sender == MessageSender.Me; 
         
-    }
-    internal class Chat
-    {
-        public List<MessageData> messages { get; set; } 
-        public int messageAmount { get; set; }  
     }
 }
