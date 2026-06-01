@@ -25,6 +25,17 @@
                 </StackPanel>
             </Grid>
         </DataTemplate>
+        <DataTemplate x:Key="chatListTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Border BorderBrush="Black" BorderThickness="2"/>
+                <TextBlock Text="{Binding Path=ContactName}"/>
+            </Grid>
+        </DataTemplate>
     </Window.Resources>
     
     <Grid>
@@ -35,7 +46,7 @@
         </Grid.ColumnDefinitions>
         
         <!-- List of dialoge -->
-        <ListBox Name="listDialog" Grid.Column="0">
+        <ListBox Name="listDialog" Grid.Column="0" ItemTemplate="{StaticResource chatListTemplate}">
         </ListBox>
         
         <!-- List messages history -->

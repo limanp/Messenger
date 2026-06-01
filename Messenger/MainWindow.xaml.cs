@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Messenger
 {
@@ -23,16 +24,18 @@ namespace Messenger
         public MainWindow()
         {
             InitializeComponent();
+            var chatList = new ObservableCollection<Chat>(); 
+
             messageList.ItemsSource = chat.Messages; 
         }
      
 
-        private void Send_Message(object sender, RoutedEventArgs e)
+        private void Send_Message(object sender, RoutedEventArgs e) 
         {
             var text = MessageTextBox.Text;
             if (!string.IsNullOrWhiteSpace(text))
             {
-                MessageData message = new MessageData() { ContactName = "Pavlo", Text = text };
+                MessageData message = new MessageData("Pavlo", text, MessageSender.Me);
                 chat.Messages.Add(message); 
              
                 MessageTextBox.Clear();
@@ -45,12 +48,7 @@ namespace Messenger
     {
         public ObservableCollection<MessageData> Messages { get; set; } = new ObservableCollection<MessageData>();
 
-        private object _currentChat;
-        public object CurrentChat
-        {
-            get => _currentChat;
-            set { _currentChat = value; OnPropertyChanged(); }
-        }
+       
         public event PropertyChangedEventHandler? PropertyChanged; 
 
         protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
@@ -66,6 +64,12 @@ namespace Messenger
     public class MessageData // Клас для зберігання даних про повідомлення 
     {
 
+        public MessageData(string contactName, string text, MessageSender sender)
+        {
+            ContactName = contactName;
+            Text = text;
+            Sender = sender; 
+        }
         public string ContactName { get; set; } = string.Empty;
         public string Text { get; set; } = string.Empty;
         public string AvatarPath { get; set; } = string.Empty;
