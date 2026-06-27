@@ -21,10 +21,22 @@ namespace Messenger
     public partial class MainWindow : Window
     {
         Chat chat = new Chat();
+
+
+
+        MessageData[] messagesTestForChatList =
+        {
+            new MessageData("News", "SomeText", MessageSender.Contact),
+            new MessageData("Bob", "SomeText", MessageSender.Contact),
+            new MessageData("James", "SomeText", MessageSender.Contact),
+            new MessageData("ProgrammingNews", "SomeText", MessageSender.Contact)
+        };
+
         public MainWindow()
         {
             InitializeComponent();
-            var chatList = new ObservableCollection<Chat>(); 
+            var chatList = new ObservableCollection<Chat>();
+            chatList.Add(new Chat());
 
             messageList.ItemsSource = chat.Messages; 
         }
@@ -46,13 +58,28 @@ namespace Messenger
 
     public class Chat : INotifyPropertyChanged
     {
+        public Chat() { }
+        public Chat(MessageData[] messages)
+        {
+            foreach(MessageData message in messages)
+            {
+                Messages.Add(message); 
+            }
+        }
         public ObservableCollection<MessageData> Messages { get; set; } = new ObservableCollection<MessageData>();
+        public string Name { get; set; }
 
-       
+        //private object _currentChat;
+        //public object CurrentChat
+        //{
+        //    get => _currentChat;
+        //    set { _currentChat = value; OnPropertyChanged(); }
+        //}
+
         public event PropertyChangedEventHandler? PropertyChanged; 
 
-        protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); 
+       // protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        //    => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); 
 
     }
 

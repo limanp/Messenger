@@ -33,7 +33,8 @@
                 </Grid.ColumnDefinitions>
 
                 <Border BorderBrush="Black" BorderThickness="2"/>
-                <TextBlock Text="{Binding Path=ContactName}"/>
+                <TextBlock Text="{Binding Path=ChatName}"/>
+                <TextBlock Text="{Binding Path=LastChatMessage}"/>
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -45,8 +46,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
-        <!-- List of dialoge -->
-        <ListBox Name="listDialog" Grid.Column="0" ItemTemplate="{StaticResource chatListTemplate}">
+        <!-- List of chats -->
+        <ListBox Name="chatList" Grid.Column="0" ItemTemplate="{StaticResource chatListTemplate}">
         </ListBox>
         
         <!-- List messages history -->
