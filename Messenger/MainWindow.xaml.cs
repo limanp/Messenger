@@ -23,32 +23,33 @@ namespace Messenger
     {
         public Chat CurrentChat = new Chat("asdfasd");
 
-        public MainWindow()
+        static MessageData[] messagesOfITCommunity =
         {
-            InitializeComponent();
-            MessageData[] messagesOfITCommunity =
-            {
-                new MessageData("News", "SomeText", MessageSender.Contact),
-                new MessageData("Bob", "SomeText", MessageSender.Contact),
-                new MessageData("James", "SomeText", MessageSender.Contact),
-                new MessageData("ProgrammingNews", "SomeText", MessageSender.Contact)
-            };
+            new MessageData("News", "SomeText", MessageSender.Contact),
+            new MessageData("Bob", "SomeText", MessageSender.Contact),
+            new MessageData("James", "SomeText", MessageSender.Contact),
+            new MessageData("ProgrammingNews", "SomeText", MessageSender.Contact)
+        };
 
-            MessageData[] messagesOfTechNews =
-            {
-                new MessageData("TechNews", "New iphone implement AI in own OS", MessageSender.Contact)
-            };
+        static MessageData[] messagesOfTechNews =
+        {
+            new MessageData("TechNews", "New iphone implement AI in own OS", MessageSender.Contact)
+         };
 
-            ObservableCollection<Chat> Chats = new ObservableCollection<Chat>
+        ObservableCollection<Chat> chats = new ObservableCollection<Chat>
             {
                 new Chat ("TechNews", messagesOfTechNews),
                 new Chat ("ITCommunity", messagesOfITCommunity)
             };
 
-            // Connected collection with xaml elemenents 
-            ChatMassageHistory.ItemsSource = CurrentChat.Messages;
 
-            ChatList.ItemsSource = Chats; 
+        public MainWindow()
+        {
+            InitializeComponent();
+           
+            // Connected collection with xaml elemenents 
+            ChatList.ItemsSource = chats;
+            ChatMassageHistory.ItemsSource = CurrentChat.Messages;
         }
 
 
@@ -63,6 +64,20 @@ namespace Messenger
                 MessageTextBox.Clear();
             }
 
+        }
+
+        private void ChatList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Chat item = (sender as ListBox).SelectedItem as Chat;
+
+            foreach (var chat in chats)
+            {
+                if (item.Name == chat.Name)
+                {
+                    CurrentChat = chat;
+                    ChatMassageHistory.ItemsSource = CurrentChat.Messages;
+                }           
+            }
         }
     }
 
@@ -80,19 +95,11 @@ namespace Messenger
                 Messages.Add(message);
             }
         }
-        public Chat(MessageData[] messages)
-        {
-            foreach (MessageData message in messages)
-            {
-                Messages.Add(message);
-            }
-        }
+
         public ObservableCollection<MessageData> Messages { get; set; } = new ObservableCollection<MessageData>();
         public string Name { get; set; }
-        public string LastMessage()
-        {
-            return Messages[^1].Text; 
-        }
+        public string LastMessage { get { return Messages[^1].Text; } }
+        public int Id { get; }
 
         //private object _currentChat;
         //public object CurrentChat

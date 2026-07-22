@@ -26,16 +26,19 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="PanelWithChatsTemplate">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+            <Border BorderBrush="Black" BorderThickness="2">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
-                <Border BorderBrush="Black" BorderThickness="2"/>
-                <TextBlock Text="{Binding Path=Name}"/>
-                <TextBlock Text="{Binding Path=LastMessage}"/>
-            </Grid>
+                    <TextBlock Name="ChatName" Grid.Row="0" Text="{Binding Path=Name}"/>
+                    <TextBlock Name="LastChatMessage" Grid.Row="1" Text="{Binding Path=LastMessage}"/>
+                    
+                </Grid>
+            </Border>
+            
         </DataTemplate>
     </Window.Resources>
     
@@ -47,7 +50,8 @@
         </Grid.ColumnDefinitions>
         
         <!-- List of chats -->
-        <ListBox Name="ChatList" Grid.Column="0" ItemTemplate="{StaticResource PanelWithChatsTemplate}">
+        <ListBox Name="ChatList" Grid.Column="0" ItemTemplate="{StaticResource PanelWithChatsTemplate}"
+                 SelectionChanged="ChatList_SelectionChanged" SelectionMode="Single">
         </ListBox>
         
         <!-- List messages history -->
