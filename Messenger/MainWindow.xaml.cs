@@ -100,6 +100,7 @@ namespace Messenger
         public string Name { get; set; }
         public string LastMessage { get { return Messages[^1].Text; } }
         public int Id { get; }
+        public int MaxWidth { get; set; } = 200; 
 
         //private object _currentChat;
         //public object CurrentChat
