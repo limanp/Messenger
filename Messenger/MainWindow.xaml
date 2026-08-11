@@ -76,9 +76,9 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                
-                <TextBox Name="MessageTextBox" Grid.Column="0" TextWrapping="Wrap" AcceptsReturn="True" Background="Aqua" />
-                <Button Grid.Column="1" Content="Send" Click="Send_Message" Width="50"/>
+                <!--For textbox later add through key (ctrl and enter) carriage return to new line-->       
+                <TextBox Name="MessageTextBox" Grid.Column="0" TextWrapping="Wrap" AcceptsReturn="False" Background="Aqua" KeyDown="MessageTextBox_SendMessage"/>
+                <Button Grid.Column="1" Content="Send" Click="Button_SendMessage" Width="50"/>
             </Grid>
                        
         </Grid>

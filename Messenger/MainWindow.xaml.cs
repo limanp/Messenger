@@ -21,7 +21,7 @@ namespace Messenger
 
     public partial class MainWindow : Window
     {
-        public Chat CurrentChat = new Chat("asdfasd");
+        public Chat CurrentChat; 
 
         static MessageData[] messagesOfITCommunity =
         {
@@ -49,11 +49,10 @@ namespace Messenger
            
             // Connected collection with xaml elemenents 
             ChatList.ItemsSource = chats;
-            ChatMassageHistory.ItemsSource = CurrentChat.Messages;
+            //ChatMassageHistory.ItemsSource = CurrentChat.Messages;
         }
 
-
-        private void Send_Message(object sender, RoutedEventArgs e)
+        private void SendMessage()
         {
             var text = MessageTextBox.Text;
             if (!string.IsNullOrWhiteSpace(text))
@@ -63,7 +62,17 @@ namespace Messenger
 
                 MessageTextBox.Clear();
             }
+        }
 
+        private void Button_SendMessage(object sender, RoutedEventArgs e)
+        {
+            SendMessage(); 
+        }
+
+        private void MessageTextBox_SendMessage(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                SendMessage(); 
         }
 
         private void ChatList_SelectionChanged(object sender, SelectionChangedEventArgs e)
