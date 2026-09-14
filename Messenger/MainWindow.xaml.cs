@@ -52,41 +52,36 @@ namespace Messenger
             //ChatMassageHistory.ItemsSource = CurrentChat.Messages;
         }
 
-        private void SendMessage()
-        {
-            var text = MessageTextBox.Text;
-            if (!string.IsNullOrWhiteSpace(text))
-            {
-                MessageData message = new MessageData("Pavlo", text, MessageSender.Me);
-                CurrentChat.Messages.Add(message);
-
-                MessageTextBox.Clear();
-            }
-        }
+       
 
         private void Button_SendMessage(object sender, RoutedEventArgs e)
         {
-            SendMessage(); 
+            CurrentChat.SendMessage(MessageTextBox); 
+           // SendMessage(); 
         }
 
         private void MessageTextBox_SendMessage(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-                SendMessage(); 
+                CurrentChat.SendMessage(MessageTextBox);
         }
 
         private void ChatList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Chat item = (sender as ListBox).SelectedItem as Chat;
-
-            foreach (var chat in chats)
+            if (sender is not null)
             {
-                if (item.Name == chat.Name)
+                Chat? item = (sender as ListBox).SelectedItem as Chat;
+
+                foreach (var chat in chats)
                 {
-                    CurrentChat = chat;
-                    ChatMassageHistory.ItemsSource = CurrentChat.Messages;
-                }           
+                    if (item.Name == chat.Name)
+                    {
+                        CurrentChat = chat;
+                        ChatMassageHistory.ItemsSource = CurrentChat.Messages;
+                    }
+                }
             }
+            
         }
     }
 
@@ -94,7 +89,7 @@ namespace Messenger
     {
         public Chat(string name)
         {
-            Name = name;         
+            Name = name;
         }
         public Chat(string name, MessageData[] messages)
         {
@@ -109,14 +104,19 @@ namespace Messenger
         public string Name { get; set; }
         public string LastMessage { get { return Messages[^1].Text; } }
         public int Id { get; }
-        public int MaxWidth { get; set; } = 200; 
+        public int MaxWidth { get; set; } = 200;
 
-        //private object _currentChat;
-        //public object CurrentChat
-        //{
-        //    get => _currentChat;
-        //    set { _currentChat = value; OnPropertyChanged(); }
-        //}
+        public void SendMessage(TextBox MessageTextBox)
+        {
+            var text = MessageTextBox.Text;
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                MessageData message = new MessageData("Pavlo", text, MessageSender.Me);
+                Messages.Add(message);
+
+                MessageTextBox.Clear();
+            }
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

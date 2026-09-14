@@ -25,7 +25,7 @@
                 </StackPanel>
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="PanelWithChatsTemplate">
+        <DataTemplate x:Key="PanelWithChatsTemplate"> <!--This is panel where -->
 
             <Grid>
                 <Grid.RowDefinitions>
